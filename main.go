@@ -250,10 +250,9 @@ func signInHandler(c *fiber.Ctx) error {
 
 	// Success response
 	return c.JSON(fiber.Map{
-		// "message":  "Login successful 🎉",
+		"message": "welcome mr. Pushpendra🎉",
 		"userId":  userID,
 		"email":   req.Email,
-		"message": "welcome mr. Pushpendra🎉",
 	})
 }
 
