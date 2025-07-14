@@ -76,6 +76,35 @@ func FetchAllUsers() ([]FetchAllUsersOutput, error) {
 	return users, nil
 }
 
+// ✅ FIXED: Query from "users" instead of "user"
+func FetchUserIDFromEmailID(email string) (int, error) {
+	query := `SELECT userid FROM users WHERE email = $1`
+
+	var userID int
+	err := DB.QueryRow(query, email).Scan(&userID)
+	if err == sql.ErrNoRows {
+		return 0, fmt.Errorf("no user found with email: %s", email)
+	}
+	if err != nil {
+		return 0, err
+	}
+
+	return userID, nil
+}
+func FetchPasswordByUserID(userID int) (string, error) {
+	query := `SELECT password FROM users WHERE userid = $1`
+
+	var password string
+	err := DB.QueryRow(query, userID).Scan(&password)
+	if err == sql.ErrNoRows {
+		return "", fmt.Errorf("no user found with userID: %d", userID)
+	}
+	if err != nil {
+		return "", err
+	}
+
+	return password, nil
+}
 func main() {
 	if err := CreateDbObject(); err != nil {
 		log.Fatal("❌ DB Connection Failed:", err)
