@@ -221,6 +221,7 @@ func signInHandler(c *fiber.Ctx) error {
 	var req struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
+		userid   int64  `json:"userid"`
 	}
 
 	if err := c.BodyParser(&req); err != nil {
@@ -236,7 +237,7 @@ func signInHandler(c *fiber.Ctx) error {
 		FROM users u
 		JOIN passwords p ON u.userid = p.userid
 		WHERE u.email = $1
-	`, req.Email).Scan(&userID, &storedPassword)
+	    `, req.Email).Scan(&userID, &storedPassword)
 
 	if err != nil {
 		return notFound(c, "User not found with this email")
@@ -249,9 +250,10 @@ func signInHandler(c *fiber.Ctx) error {
 
 	// Success response
 	return c.JSON(fiber.Map{
-		"message": "Login successful 🎉",
-		//"userId":  userID,
-		//"email":   req.Email,
+		"message":  "Login successful 🎉",
+		"userId":   userID,
+		"email":    req.Email,
+		"message1": "welcome mr. Pushpendra🎉",
 	})
 }
 
