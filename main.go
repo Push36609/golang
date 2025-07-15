@@ -221,7 +221,7 @@ func signInHandler(c *fiber.Ctx) error {
 	var req struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
-		userid   int64  `json:"userid"`
+		userId   int64  `json:"userid"`
 	}
 
 	if err := c.BodyParser(&req); err != nil {
@@ -250,7 +250,7 @@ func signInHandler(c *fiber.Ctx) error {
 
 	// Success response
 	return c.JSON(fiber.Map{
-		"message": "welcome mr. Pushpendra🎉",
+		"message": "login successfully 👍 welcome mr. Pushpendra🎉",
 		"userId":  userID,
 		"email":   req.Email,
 	})
