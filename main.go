@@ -233,7 +233,7 @@ func signInHandler(c *fiber.Ctx) error {
 	var storedPassword string
 
 	err := DB.QueryRow(`
-	SELECT u.userid, p.password
+	SELECT u.userid, p.password , u.email
 	FROM users u
 	JOIN passwords p ON u.userid = p.userid
 	WHERE u.email = $1 AND u.userid = $2
@@ -252,8 +252,8 @@ func signInHandler(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"message": "welcome mr. Pushpendra🎉 login successfully 👍 ",
 		// "db name": DBNAME,
-		"userId": userID,
-		// "email":  req.Email,
+		"userId":   userID,
+		"email":    req.Email,
 		"password": PASSWORD,
 	})
 }
